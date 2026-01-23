@@ -1,6 +1,6 @@
-import axios, { Axios } from "axios";
+import axios from "axios";
 
 const BaseURl = "https://dummyjson.com";
-export const API = Axios.create({
+export const API = axios.create({
   baseURL: BaseURl,
 });
