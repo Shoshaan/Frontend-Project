@@ -1,7 +1,45 @@
-import React from 'react'
+import React from "react";
+import { Navbar as BNavbar, Button, Container, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { LogoutButton } from "../LogoutButton/LogoutButton";
 
 export const Navbar = () => {
   return (
-    <div>Navbar</div>
-  )
-}
+    <BNavbar expand="md">
+      <Container>
+        <BNavbar.Brand>
+          <span>LOGO</span>
+        </BNavbar.Brand>
+        <BNavbar.Toggle></BNavbar.Toggle>
+        <BNavbar.Collapse>
+          <Nav>
+            <Nav.Item>
+              <Nav.Link to="/" as={Link}>
+                Home
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link to="/products" as={Link}>
+                Products
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link to="/cart" as={Link}>
+                Cart
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+          <div className="d-flex gap-2 ms-auto">
+            <Button as={Link} to="/login">
+              Login
+            </Button>
+            <Button as={Link} to="/register">
+              Sign Up
+            </Button>
+            <LogoutButton />
+          </div>
+        </BNavbar.Collapse>
+      </Container>
+    </BNavbar>
+  );
+};
