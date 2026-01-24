@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Styles/App.scss";
 import { Container } from "react-bootstrap";
@@ -12,11 +12,12 @@ import { Login } from "./Pages/Login";
 import { Register } from "./Pages/Register";
 import { API } from "./Api/Api";
 import { Toaster } from "react-hot-toast";
-import { errorHandler } from "./Utils/ErrorHandler";
 import { clearUser, setUser } from "./Store/Slices/AuthSlice";
 import { useDispatch } from "react-redux";
+import { Loading } from "./Components/Loading/Loading";
 
 export default function App() {
+  const [loading, setloading] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
     async function getMe() {
@@ -36,9 +37,11 @@ export default function App() {
           localStorage.removeItem("accessToken");
         }
       }
+      setloading(false);
     }
     getMe();
   }, []);
+  if (loading) return <Loading />;
   return (
     <div>
       <Navbar />

@@ -8,6 +8,7 @@ export const LogoutButton = () => {
   const dispatch = useDispatch();
   function handleLogout() {
     dispatch(clearUser());
+    localStorage.removeItem("accessToken");
   }
   return (
     <Button onClick={handleLogout}>
