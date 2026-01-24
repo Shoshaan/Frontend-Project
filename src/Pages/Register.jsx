@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { API } from "../Api/Api";
 import { useDispatch } from "react-redux";
 import { setUser } from "../Store/Slices/AuthSlice";
+import { errorHandler } from "../Utils/ErrorHandler";
 
 export const Register = () => {
   // Catching data
@@ -11,10 +12,10 @@ export const Register = () => {
     lastNameRef = useRef(),
     emailRef = useRef(),
     passwordRef = useRef();
-    // Navigation
+  // Navigation
   const navigate = useNavigate();
   // Redux
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // Handling data
   async function handleSubmit(ev) {
     ev.preventDefault();
@@ -26,12 +27,13 @@ export const Register = () => {
     };
     try {
       const response = await API.post("/users/add", data);
-      const payload = response.data
-      dispatch(setUser(payload))
+      toast.success("Signed up");
+      const payload = response.data;
+      dispatch(setUser(payload));
       //navigation
       navigate("/");
     } catch (error) {
-      console.log(error.message);
+      errorHandler(error, "Network error");
     }
   }
   return (

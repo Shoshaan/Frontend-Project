@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { API } from "../Api/Api";
 import { setUser } from "../Store/Slices/AuthSlice";
 import { useDispatch } from "react-redux";
+import { errorHandler } from "../Utils/ErrorHandler";
+import toast from "react-hot-toast";
 
 export const Login = () => {
   // Catching data
@@ -23,12 +25,15 @@ export const Login = () => {
     try {
       const response = await API.post("/auth/login", data);
       console.log(response.data);
+      toast.success("Signed in successfully");
       const payload = response.data;
       dispatch(setUser(payload));
-      //navigation
+      // Storing access token
+      localStorage.setItem("accessToken", payload.accessToken);
+      // navigation
       navigate("/");
     } catch (error) {
-      console.log(error.message);
+      errorHandler(error,"Network error");
     }
   }
   return (
@@ -40,7 +45,7 @@ export const Login = () => {
           type="text"
           id="userName"
           name="userName"
-          placeholder="userName"
+          placeholder="User Name"
           required
           ref={userNameRef}
         />
@@ -49,7 +54,7 @@ export const Login = () => {
           type="password"
           id="password"
           name="password"
-          placeholder="password"
+          placeholder="Password"
           required
           minLength={8}
           maxLength={32}
