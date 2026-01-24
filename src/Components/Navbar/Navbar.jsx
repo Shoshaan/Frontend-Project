@@ -2,8 +2,10 @@ import React from "react";
 import { Navbar as BNavbar, Button, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { LogoutButton } from "../LogoutButton/LogoutButton";
+import { useSelector } from "react-redux";
 
 export const Navbar = () => {
+  const { isLoggedIn } = useSelector((store) => store.auth);
   return (
     <BNavbar expand="md">
       <Container>
@@ -30,13 +32,18 @@ export const Navbar = () => {
             </Nav.Item>
           </Nav>
           <div className="d-flex gap-2 ms-auto">
-            <Button as={Link} to="/login">
-              Login
-            </Button>
-            <Button as={Link} to="/register">
-              Sign Up
-            </Button>
-            <LogoutButton />
+            {isLoggedIn ? (
+              <LogoutButton />
+            ) : (
+              <>
+                <Button as={Link} to="/login">
+                  Login
+                </Button>
+                <Button as={Link} to="/register">
+                  Sign Up
+                </Button>
+              </>
+            )}
           </div>
         </BNavbar.Collapse>
       </Container>

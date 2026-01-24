@@ -2,6 +2,8 @@ import { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { API } from "../Api/Api";
+import { useDispatch } from "react-redux";
+import { setUser } from "../Store/Slices/AuthSlice";
 
 export const Register = () => {
   // Catching data
@@ -9,7 +11,10 @@ export const Register = () => {
     lastNameRef = useRef(),
     emailRef = useRef(),
     passwordRef = useRef();
+    // Navigation
   const navigate = useNavigate();
+  // Redux
+  const dispatch = useDispatch()
   // Handling data
   async function handleSubmit(ev) {
     ev.preventDefault();
@@ -21,8 +26,8 @@ export const Register = () => {
     };
     try {
       const response = await API.post("/users/add", data);
-      console.log(response.data);
-      // handling store is needed
+      const payload = response.data
+      dispatch(setUser(payload))
       //navigation
       navigate("/");
     } catch (error) {
