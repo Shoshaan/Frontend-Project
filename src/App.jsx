@@ -15,6 +15,7 @@ import { Toaster } from "react-hot-toast";
 import { clearUser, setUser } from "./Store/Slices/AuthSlice";
 import { useDispatch } from "react-redux";
 import { Loading } from "./Components/Loading/Loading";
+import { SearchPage } from "./Pages/SearchPage/SearchPage";
 
 export default function App() {
   const [loading, setloading] = useState(true);
@@ -52,6 +53,7 @@ export default function App() {
           <Route path="/products" Component={Products} />
           <Route path="/cart" Component={Cart} />
           <Route path="products/:id" Component={ProductDetails} />
+          <Route path="/search" Component={SearchPage} />
           <Route path="/login" Component={Login} />
           <Route path="/register" Component={Register} />
         </Routes>

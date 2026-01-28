@@ -3,6 +3,7 @@ import { Navbar as BNavbar, Button, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { LogoutButton } from "../LogoutButton/LogoutButton";
 import { useSelector } from "react-redux";
+import { SearchBar } from "../SearchBar/SearchBar";
 
 export const Navbar = () => {
   const { isLoggedIn } = useSelector((store) => store.auth);
@@ -28,6 +29,11 @@ export const Navbar = () => {
             <Nav.Item>
               <Nav.Link to="/cart" as={Link}>
                 Cart
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link to="/search" as={Link}>
+                Search
               </Nav.Link>
             </Nav.Item>
           </Nav>
