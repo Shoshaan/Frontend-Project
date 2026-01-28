@@ -24,7 +24,7 @@ export const Products = () => {
         try {
           setloading(true);
           const response = await API.get(
-            `products?limit=${limit}&skip=${skip}`,
+            `/products?limit=${limit}&skip=${skip}`,
           );
           const { products, total } = response.data;
           setProducts(products);

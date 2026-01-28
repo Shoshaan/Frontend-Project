@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 
 export const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
   return (
     <Card className="h-100">
       <Card.Img src={product.thumbnail} />
@@ -10,6 +12,9 @@ export const ProductCard = ({ product }) => {
         <div>{product.price}</div>
       </Card.Body>
       <Card.Footer>
+        <Button as={Link} to={`/products/${product.id}`}>
+          Learn more
+        </Button>
         <Button>Add to Cart</Button>
       </Card.Footer>
     </Card>
