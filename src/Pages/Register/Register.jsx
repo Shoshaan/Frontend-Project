@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { API } from "../Api/Api";
+import { API } from "../../Api/Api";
 import { useDispatch } from "react-redux";
-import { setUser } from "../Store/Slices/AuthSlice";
-import { errorHandler } from "../Utils/ErrorHandler";
+import { setUser } from "../../Store/Slices/AuthSlice";
+import { errorHandler } from "../../Utils/ErrorHandler";
 
 export const Register = () => {
   // Catching data

@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { API } from "../Api/Api";
-import { setUser } from "../Store/Slices/AuthSlice";
+import { API } from "../../Api/Api";
+import { setUser } from "../../Store/Slices/AuthSlice";
 import { useDispatch } from "react-redux";
-import { errorHandler } from "../Utils/ErrorHandler";
+import { errorHandler } from "../../Utils/ErrorHandler";
 import toast from "react-hot-toast";
 
 export const Login = () => {
@@ -33,7 +33,7 @@ export const Login = () => {
       // navigation
       navigate("/");
     } catch (error) {
-      errorHandler(error,"Network error");
+      errorHandler(error, "Network error");
     }
   }
   return (

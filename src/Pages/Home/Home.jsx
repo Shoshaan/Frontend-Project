@@ -1,7 +1,7 @@
 import React from "react";
 import { Carousel, Container } from "react-bootstrap";
 import { Images } from "../../Constants/Images";
-import { SortedProducts } from "../SortedProducts/SortedProducts";
+import { SortedProducts } from "../../Components/SortedProducts/SortedProducts";
 
 export const Home = () => {
   return (
