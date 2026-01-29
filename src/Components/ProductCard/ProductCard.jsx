@@ -16,9 +16,10 @@ export const ProductCard = ({ product }) => {
       <Card.Img src={product.thumbnail} />
       <Card.Body>
         <Card.Title>{product.title}</Card.Title>
+        <p>⭐ Rating: {product?.rating}</p>
         <div>{product.price}</div>
       </Card.Body>
-      <Card.Footer className="d-flex justify-content-center gap-3">
+      <Card.Footer className="d-flex justify-content-around">
         <Button as={Link} to={`/products/${product.id}`}>
           Learn more
         </Button>

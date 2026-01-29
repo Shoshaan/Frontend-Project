@@ -1,11 +1,12 @@
 import React from "react";
 import { ProductsPreview } from "../../Components/ProductsPreview/ProductsPreview";
 import { SearchBar } from "../../Components/SearchBar/SearchBar";
+import { Container } from "react-bootstrap";
 
 export const SearchPage = () => {
   return (
-    <div>
-      <SearchBar />
-    </div>
+    <Container className="my-4">
+      <SearchBar/>
+    </Container>
   );
 };

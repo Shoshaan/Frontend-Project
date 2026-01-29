@@ -4,7 +4,7 @@ import { API } from "../../Api/Api";
 import { errorHandler } from "../../Utils/ErrorHandler";
 import { Loading } from "../../Components/Loading/Loading";
 import { ProductsPreview } from "../../Components/ProductsPreview/ProductsPreview";
-import { Pagination } from "react-bootstrap";
+import { Container, Pagination } from "react-bootstrap";
 
 export const Products = () => {
   const [loading, setloading] = useState(false);
@@ -42,9 +42,9 @@ export const Products = () => {
   );
   if (loading) return <Loading />;
   return (
-    <div>
+    <Container>
       <ProductsPreview products={products} />
-      <Pagination className="justify-content-center flex-wrap">
+      <Pagination className="justify-content-center flex-wrap my-3">
         {currentPage != 1 && <Pagination.First onClick={() => calSkip(1)} />}
         <Pagination.Prev
           onClick={() => calSkip(currentPage - 1)}
@@ -66,6 +66,6 @@ export const Products = () => {
           <Pagination.Last onClick={() => calSkip(pages)} />
         )}
       </Pagination>
-    </div>
+    </Container>
   );
 };

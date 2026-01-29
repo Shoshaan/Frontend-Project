@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Styles/App.scss";
 import { Container } from "react-bootstrap";
@@ -16,10 +16,15 @@ import { clearUser, setUser } from "./Store/Slices/AuthSlice";
 import { useDispatch } from "react-redux";
 import { Loading } from "./Components/Loading/Loading";
 import { SearchPage } from "./Pages/SearchPage/SearchPage";
+import { CartsList } from "./Pages/Dashboard/Carts/CartsList";
+import { CartDetails } from "./Pages/Dashboard/Carts/CartDetails";
+import { UsersList } from "./Pages/Dashboard/Users/UsersList";
+import { useSelector } from "react-redux";
 
 export default function App() {
   const [loading, setloading] = useState(true);
   const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((store) => store.auth);
   useEffect(() => {
     async function getMe() {
       const accessToken = localStorage.getItem("accessToken");
@@ -56,6 +61,18 @@ export default function App() {
           <Route path="/search" Component={SearchPage} />
           <Route path="/login" Component={Login} />
           <Route path="/register" Component={Register} />
+          <Route
+            path="/dashboard/carts"
+            Component={isLoggedIn ? CartsList : Login}
+          />
+          <Route
+            path="/dashboard/carts/:id"
+            Component={isLoggedIn ? CartDetails : Login}
+          />
+          <Route
+            path="/dashboard/users"
+            Component={isLoggedIn ? UsersList : Login}
+          />
         </Routes>
       </Container>
     </div>

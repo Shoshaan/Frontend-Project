@@ -25,13 +25,13 @@ export const SearchBar = () => {
   }
   return (
     <div>
-      <Form onSubmit={handleSearch} className="d-flex">
+      <Form onSubmit={handleSearch} className="d-flex my-4">
         <Form.Control
           placeholder="Search"
           ref={searchRef}
-          onFocus={() => navigate("/search")}
+            className="me-3"
         />
-        <Button type="submit">Search</Button>
+        <Button type="submit" className="px-3">Search</Button>
       </Form>
       {products.length == 0 ? (
         <p>No Results</p>

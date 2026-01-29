@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Card, Button, Row, Col, Form } from "react-bootstrap";
+import { Card, Button, Row, Col, Container } from "react-bootstrap";
 import {
   removeFromCart,
   updateQuantity,
@@ -17,11 +17,15 @@ export const Cart = () => {
   );
 
   if (items.length === 0) {
-    return <h4>Your cart is empty</h4>;
+    return (
+      <Container className="py-3">
+        <h4>Your cart is empty</h4>
+      </Container>
+    );
   }
 
   return (
-    <div>
+    <Container className="py-3">
       <h3 className="mb-4">Your Cart</h3>
       {items.map(({ product, quantity }) => (
         <Card key={product.id} className="mb-3">
@@ -67,9 +71,7 @@ export const Cart = () => {
                     +
                   </Button>
                 </div>
-                <Button
-                  onClick={() => dispatch(removeFromCart(product.id))}
-                >
+                <Button onClick={() => dispatch(removeFromCart(product.id))}>
                   Remove
                 </Button>
               </Card.Body>
@@ -80,10 +82,8 @@ export const Cart = () => {
       <hr />
       <div className="d-flex justify-content-between align-items-center">
         <h4>Total: ${total}</h4>
-        <Button onClick={() => dispatch(clearCart())}>
-          Clear Cart
-        </Button>
+        <Button onClick={() => dispatch(clearCart())}>Clear Cart</Button>
       </div>
-    </div>
+    </Container>
   );
 };

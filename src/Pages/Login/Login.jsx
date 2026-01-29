@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../Api/Api";
 import { setUser } from "../../Store/Slices/AuthSlice";
@@ -37,31 +37,37 @@ export const Login = () => {
     }
   }
   return (
-    <div>
-      <h3>Log In</h3>
-      <Form onSubmit={handleLogin}>
-        <Form.Label htmlFor="text">User Name</Form.Label>
-        <Form.Control
-          type="text"
-          id="userName"
-          name="userName"
-          placeholder="User Name"
-          required
-          ref={userNameRef}
-        />
-        <Form.Label htmlFor="firstName">Password</Form.Label>
-        <Form.Control
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Password"
-          required
-          minLength={8}
-          maxLength={32}
-          ref={passwordRef}
-        />
-        <Button type="submit">Log In</Button>
-      </Form>
-    </div>
+    <Row className="justify-content-center">
+      <Col md={6} lg={4}>
+        <h3>Log In</h3>
+        <Form onSubmit={handleLogin}>
+          <Form.Group className="my-3">
+            <Form.Label htmlFor="text">User Name</Form.Label>
+            <Form.Control
+              type="text"
+              id="userName"
+              name="userName"
+              placeholder="User Name"
+              required
+              ref={userNameRef}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label htmlFor="firstName">Password</Form.Label>
+            <Form.Control
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              required
+              minLength={8}
+              maxLength={32}
+              ref={passwordRef}
+            />
+          </Form.Group>
+          <Button type="submit">Log In</Button>
+        </Form>
+      </Col>
+    </Row>
   );
 };
