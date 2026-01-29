@@ -42,41 +42,48 @@ export const CartsList = () => {
   return (
     <Container>
       <h3 className="mb-4">All Carts</h3>
-
-      <Table className="text-center">
-        <thead>
-          <tr>
-            <th>Cart ID</th>
-            <th>User ID</th>
-            <th>Total Products</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {carts.map((cart) => (
-            <tr key={cart.id}>
-              <td>{cart.id}</td>
-              <td>{cart.userId}</td>
-              <td>{cart.products.length}</td>
-              <td>
-                <FaEye
-                  className="me-3 fs-4"
-                  onClick={() => navigate(`/dashboard/carts/${cart.id}`)}
-                />
-                <HiPencilAlt
-                  className="me-3 fs-4"
-                  onClick={() => navigate(`/dashboard/carts/${cart.id}/edit`)}
-                />
-                <MdDeleteForever
-                  className="me-3 fs-4"
-                  onClick={() => handleDelete(cart.id)}
-                />
-              </td>
+      <div className="table-responsive">
+        {" "}
+        <Table className="text-center">
+          <thead>
+            <tr>
+              <th>Cart ID</th>
+              <th>User ID</th>
+              <th>Total Products</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+
+          <tbody>
+            {carts.map((cart) => (
+              <tr key={cart.id}>
+                <td>{cart.id}</td>
+                <td>{cart.userId}</td>
+                <td>{cart.products.length}</td>
+                <td>
+                  <div className="d-flex justify-content-between align-items-center mt-3">
+                    {" "}
+                    <FaEye
+                      className="me-3 fs-4"
+                      onClick={() => navigate(`/dashboard/carts/${cart.id}`)}
+                    />
+                    <HiPencilAlt
+                      className="me-3 fs-4"
+                      onClick={() =>
+                        navigate(`/dashboard/carts/${cart.id}/edit`)
+                      }
+                    />
+                    <MdDeleteForever
+                      className="me-3 fs-4"
+                      onClick={() => handleDelete(cart.id)}
+                    />
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
 
       {carts.length === 0 && <p className="text-center">No carts found</p>}
     </Container>

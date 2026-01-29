@@ -23,6 +23,10 @@ import { useSelector } from "react-redux";
 import { CartEdit } from "./Pages/Dashboard/Carts/CartEdit";
 import { UserEdit } from "./Pages/Dashboard/Users/UserEdit";
 import { UserDetails } from "./Pages/Dashboard/Users/UserDetails";
+import { AProductsList } from "./Pages/Dashboard/Products/AProductsList";
+import { AProductDetails } from "./Pages/Dashboard/Products/AProductDetails";
+import { AProductEdit } from "./Pages/Dashboard/Products/AProductEdit";
+import { AdminSideNav } from "./Components/AdminSideNav/AdminSideNav";
 
 export default function App() {
   const [loading, setloading] = useState(true);
@@ -52,44 +56,59 @@ export default function App() {
   }, []);
   if (loading) return <Loading />;
   return (
-    <div>
-      <Navbar />
-      <Toaster position="top-right" />
-      <Container fluid className="p-0">
-        <Routes>
-          <Route path="/" Component={Home} />
-          <Route path="/products" Component={Products} />
-          <Route path="/cart" Component={Cart} />
-          <Route path="products/:id" Component={ProductDetails} />
-          <Route path="/search" Component={SearchPage} />
-          <Route path="/login" Component={Login} />
-          <Route path="/register" Component={Register} />
-          <Route
-            path="/dashboard/carts"
-            Component={isLoggedIn ? CartsList : Login}
-          />
-          <Route
-            path="/dashboard/carts/:id"
-            Component={isLoggedIn ? CartDetails : Login}
-          />
-          <Route
-            path="/dashboard/carts/:id/edit"
-            Component={isLoggedIn ? CartEdit : Login}
-          />
-          <Route
-            path="/dashboard/users"
-            Component={isLoggedIn ? UsersList : Login}
-          />
-          <Route
-            path="/dashboard/users/:id"
-            Component={isLoggedIn ? UserDetails : Login}
-          />
-          <Route
-            path="/dashboard/users/:id/edit"
-            Component={isLoggedIn ? UserEdit : Login}
-          />
-        </Routes>
-      </Container>
+    <div className="d-flex">
+      {isLoggedIn && <AdminSideNav />}
+      <div className="flex-grow-1">
+        <Navbar />
+        <Toaster position="top-right" />
+        <Container fluid className="p-0">
+          <Routes>
+            <Route path="/" Component={Home} />
+            <Route path="/products" Component={Products} />
+            <Route path="/cart" Component={Cart} />
+            <Route path="products/:id" Component={ProductDetails} />
+            <Route path="/search" Component={SearchPage} />
+            <Route path="/login" Component={Login} />
+            <Route path="/register" Component={Register} />
+            <Route
+              path="/dashboard/carts"
+              Component={isLoggedIn ? CartsList : Login}
+            />
+            <Route
+              path="/dashboard/carts/:id"
+              Component={isLoggedIn ? CartDetails : Login}
+            />
+            <Route
+              path="/dashboard/carts/:id/edit"
+              Component={isLoggedIn ? CartEdit : Login}
+            />
+            <Route
+              path="/dashboard/users"
+              Component={isLoggedIn ? UsersList : Login}
+            />
+            <Route
+              path="/dashboard/users/:id"
+              Component={isLoggedIn ? UserDetails : Login}
+            />
+            <Route
+              path="/dashboard/users/:id/edit"
+              Component={isLoggedIn ? UserEdit : Login}
+            />
+            <Route
+              path="/dashboard/products"
+              Component={isLoggedIn ? AProductsList : Login}
+            />
+            <Route
+              path="/dashboard/products/:id"
+              Component={isLoggedIn ? AProductDetails : Login}
+            />
+            <Route
+              path="/dashboard/products/:id/edit"
+              Component={isLoggedIn ? AProductEdit : Login}
+            />
+          </Routes>
+        </Container>
+      </div>
     </div>
   );
 }
