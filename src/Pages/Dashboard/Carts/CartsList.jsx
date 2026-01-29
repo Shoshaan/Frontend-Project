@@ -42,7 +42,7 @@ export const CartsList = () => {
         </thead>
 
         <tbody>
-          {carts.map((cart, index) => (
+          {carts.map((cart) => (
             <tr key={cart.id}>
               <td>{cart.id}</td>
               <td>{cart.userId}</td>
