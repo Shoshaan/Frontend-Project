@@ -20,6 +20,7 @@ import { CartsList } from "./Pages/Dashboard/Carts/CartsList";
 import { CartDetails } from "./Pages/Dashboard/Carts/CartDetails";
 import { UsersList } from "./Pages/Dashboard/Users/UsersList";
 import { useSelector } from "react-redux";
+import { CartEdit } from "./Pages/Dashboard/Carts/CartEdit";
 
 export default function App() {
   const [loading, setloading] = useState(true);
@@ -73,6 +74,7 @@ export default function App() {
             path="/dashboard/users"
             Component={isLoggedIn ? UsersList : Login}
           />
+          <Route path="/dashboard/carts/:id/edit" Component={CartEdit} />
         </Routes>
       </Container>
     </div>

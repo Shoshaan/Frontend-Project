@@ -53,6 +53,7 @@ export const CartDetails = () => {
           <tr>
             <th>Product ID</th>
             <th>Product Title</th>
+            <th>Product Unit Price</th>
             <th>Quantity</th>
             <th>Total</th>
           </tr>
@@ -63,6 +64,7 @@ export const CartDetails = () => {
             <tr key={index}>
               <td>{item.id}</td>
               <td>{item.title}</td>
+              <td>{item.price}</td>
               <td>{item.quantity}</td>
               <td>{item.total.toFixed(2)} $</td>
             </tr>
