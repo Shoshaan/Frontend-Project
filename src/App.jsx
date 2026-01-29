@@ -47,7 +47,7 @@ export default function App() {
     <div>
       <Navbar />
       <Toaster position="top-right" />
-      <Container>
+      <Container fluid className="p-0">
         <Routes>
           <Route path="/" Component={Home} />
           <Route path="/products" Component={Products} />
