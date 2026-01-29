@@ -21,6 +21,8 @@ import { CartDetails } from "./Pages/Dashboard/Carts/CartDetails";
 import { UsersList } from "./Pages/Dashboard/Users/UsersList";
 import { useSelector } from "react-redux";
 import { CartEdit } from "./Pages/Dashboard/Carts/CartEdit";
+import { UserEdit } from "./Pages/Dashboard/Users/UserEdit";
+import { UserDetails } from "./Pages/Dashboard/Users/UserDetails";
 
 export default function App() {
   const [loading, setloading] = useState(true);
@@ -71,10 +73,21 @@ export default function App() {
             Component={isLoggedIn ? CartDetails : Login}
           />
           <Route
+            path="/dashboard/carts/:id/edit"
+            Component={isLoggedIn ? CartEdit : Login}
+          />
+          <Route
             path="/dashboard/users"
             Component={isLoggedIn ? UsersList : Login}
           />
-          <Route path="/dashboard/carts/:id/edit" Component={CartEdit} />
+          <Route
+            path="/dashboard/users/:id"
+            Component={isLoggedIn ? UserDetails : Login}
+          />
+          <Route
+            path="/dashboard/users/:id/edit"
+            Component={isLoggedIn ? UserEdit : Login}
+          />
         </Routes>
       </Container>
     </div>

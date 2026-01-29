@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { API } from "../../../Api/Api";
 import { errorHandler } from "../../../Utils/ErrorHandler";
-import { Table, Button, Card, Container } from "react-bootstrap";
+import { Table, Card, Container } from "react-bootstrap";
 import { Loading } from "../../../Components/Loading/Loading";
 
 export const CartDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [cart, setCart] = useState(null);
