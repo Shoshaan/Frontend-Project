@@ -1,20 +1,30 @@
 import { useEffect, useState } from "react";
 import { API } from "../../../Api/Api";
 import { errorHandler } from "../../../Utils/ErrorHandler";
-import { Container, Table, Button, Card, Form } from "react-bootstrap";
-import { Loading } from "../../../Components/Loading/Loading";
+import {
+  Container,
+  Table,
+  Button,
+  Card,
+  Form,
+  Pagination,
+} from "react-bootstrap";
 import { FaEye } from "react-icons/fa";
+import { Loading } from "../../../Components/Loading/Loading";
 import { HiPencilAlt } from "react-icons/hi";
 import { MdDeleteForever } from "react-icons/md";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "./UserList.scss";
 
 export const UsersList = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
-  const { id } = useParams();
   const navigate = useNavigate();
   const [isAdd, setIsAdd] = useState(false);
-
+  const limit = 12;
+  const [skip, setSkip] = useState(0);
+  const [pages, setPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [newUser, setNewUser] = useState({
     username: "",
     email: "",
@@ -22,6 +32,47 @@ export const UsersList = () => {
     lastName: "",
     image: "",
   });
+  const [search, setSearch] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchedUsers, setSearchedUsers] = useState([]);
+  const displayedUsers = isSearching ? searchedUsers : users;
+
+  function handleSearchFocus() {
+    setIsSearching(true);
+    setSearchedUsers([]);
+  }
+
+  function handleSearchChange(ev) {
+    setSearch(ev.target.value);
+  }
+
+  async function handleSearch() {
+    try {
+      if (!search.trim()) return;
+
+      setLoading(true);
+
+      const response = await API.get(`/users/search?q=${search}`);
+      setSearchedUsers(response.data.users);
+    } catch (error) {
+      errorHandler(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleSearchBlur() {
+    if (!search.trim()) {
+      setIsSearching(false);
+      setSearch("");
+    }
+  }
+
+  function calSkip(page) {
+    setSkip((page - 1) * limit);
+    setCurrentPage(page);
+  }
+
   function handleAddChange(ev) {
     setNewUser({
       ...newUser,
@@ -60,20 +111,27 @@ export const UsersList = () => {
       errorHandler(error);
     }
   }
-  useEffect(() => {
-    async function getUsers() {
-      try {
-        setLoading(true);
-        const response = await API.get("/users");
-        setUsers(response.data.users);
-      } catch (error) {
-        errorHandler(error);
-      } finally {
-        setLoading(false);
+  useEffect(
+    function () {
+      async function getUsers() {
+        try {
+          setLoading(true);
+          const response = await API.get(`/users?limit=${limit}&skip=${skip}`);
+          const { users, total } = response.data;
+          setUsers(users);
+          setPages(Math.ceil(total / limit));
+        } catch (error) {
+          console.log(error);
+          errorHandler(error);
+        } finally {
+          setLoading(false);
+        }
       }
-    }
-    getUsers();
-  }, []);
+      getUsers();
+    },
+    [skip],
+  );
+
   async function handleDelete(userId) {
     try {
       await API.delete(`/users/${userId}`);
@@ -86,7 +144,7 @@ export const UsersList = () => {
   if (loading) return <Loading />;
 
   return (
-    <Container>
+    <Container className="my-5">
       <div className="d-flex justify-content-end mb-3">
         <Button onClick={() => setIsAdd(true)}>Add User</Button>
       </div>
@@ -162,6 +220,21 @@ export const UsersList = () => {
           </Card.Body>
         </Card>
       )}
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Search"
+          style={{ maxWidth: "300px" }}
+          value={search}
+          onFocus={handleSearchFocus}
+          onChange={handleSearchChange}
+          onBlur={handleSearchBlur}
+        />
+
+        <Button variant="primary" onClick={handleSearch}>
+          Search
+        </Button>
+      </div>
       <h3 className="mb-4">All Users</h3>
       <div className="table-responsive">
         <Table>
@@ -176,7 +249,7 @@ export const UsersList = () => {
           </thead>
 
           <tbody>
-            {users.map((user) => (
+            {displayedUsers.map((user) => (
               <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>
@@ -185,20 +258,20 @@ export const UsersList = () => {
                 <td>{user.username}</td>
                 <td>{user.email}</td>
                 <td>
-                  <div className="d-flex flex-column gap-4">
+                  <div className="fs-4 d-flex justify-content-around">
                     <FaEye
-                      className="me-3 fs-4"
                       onClick={() => navigate(`/dashboard/users/${user.id}`)}
+                      style={{ cursor: "pointer" }}
                     />
                     <HiPencilAlt
-                      className="me-3 fs-4"
                       onClick={() =>
                         navigate(`/dashboard/users/${user.id}/edit`)
                       }
+                      style={{ cursor: "pointer" }}
                     />
                     <MdDeleteForever
-                      className="me-3 fs-4"
                       onClick={() => handleDelete(user.id)}
+                      style={{ cursor: "pointer" }}
                     />
                   </div>
                 </td>
@@ -207,6 +280,29 @@ export const UsersList = () => {
           </tbody>
         </Table>
       </div>
+      <Pagination className="justify-content-center flex-wrap my-3">
+        {currentPage != 1 && <Pagination.First onClick={() => calSkip(1)} />}
+        <Pagination.Prev
+          onClick={() => calSkip(currentPage - 1)}
+          disabled={currentPage == 1}
+        />
+        {new Array(pages).fill(1).map((item, i) => (
+          <Pagination.Item
+            key={i}
+            onClick={() => calSkip(i + 1)}
+            active={currentPage == i + 1}
+          >
+            {i + 1}
+          </Pagination.Item>
+        ))}
+        <Pagination.Next
+          onClick={() => calSkip(currentPage + 1)}
+          disabled={currentPage == pages}
+        />
+        {currentPage != pages && (
+          <Pagination.Last onClick={() => calSkip(pages)} />
+        )}
+      </Pagination>
 
       {users.length === 0 && <p className="text-center">No users found</p>}
     </Container>

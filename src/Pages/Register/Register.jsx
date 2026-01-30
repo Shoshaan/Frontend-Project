@@ -37,11 +37,11 @@ export const Register = () => {
     }
   }
   return (
-    <Row className="justify-content-center">
+    <Row className="justify-content-center my-5">
       <Col md={6} lg={4}>
-        <h3>Sign Up</h3>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="my-3">
+        <h3 className="text-center">Sign Up</h3>
+        <Form onSubmit={handleSubmit} className="auth-form">
+          <Form.Group className="mb-3">
             <Form.Label htmlFor="firstName">First Name</Form.Label>
             <Form.Control
               type="text"

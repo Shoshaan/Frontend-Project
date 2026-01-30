@@ -103,7 +103,7 @@ export const AProductsList = () => {
   if (loading) return <Loading />;
 
   return (
-    <Container>
+    <Container className="my-3">
       <div className="d-flex justify-content-end mb-3">
         <Button onClick={() => setIsAdd(true)}>Add Product</Button>
       </div>

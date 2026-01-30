@@ -37,9 +37,9 @@ export const Login = () => {
     }
   }
   return (
-    <Row className="justify-content-center">
+    <Row className="justify-content-center my-5">
       <Col md={6} lg={4}>
-        <h3>Log In</h3>
+        <h3 className="text-center">Log In</h3>
         <Form onSubmit={handleLogin}>
           <Form.Group className="my-3">
             <Form.Label htmlFor="text">User Name</Form.Label>

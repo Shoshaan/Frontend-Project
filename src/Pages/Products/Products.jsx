@@ -41,7 +41,7 @@ export const Products = () => {
   );
   if (loading) return <Loading />;
   return (
-    <Container>
+    <Container className="my-4">
       <ProductsPreview products={products} />
       <Pagination className="justify-content-center flex-wrap my-3">
         {currentPage != 1 && <Pagination.First onClick={() => calSkip(1)} />}

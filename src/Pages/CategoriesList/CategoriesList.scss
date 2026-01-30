@@ -1,0 +1,23 @@
+.category-card {
+  border: none;
+  border-radius: 12px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  h5 {
+    font-weight: 600;
+    color: #333;
+    text-transform: capitalize;
+  }
+
+  &:hover {
+    background: #30364F;
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+    h5 {
+      color: #fff;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { API } from "../../../Api/Api";
 import { errorHandler } from "../../../Utils/ErrorHandler";
-import { Table, Button, Container } from "react-bootstrap";
+import { Table, Container, Pagination } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "../../../Components/Loading/Loading";
 import { FaEye } from "react-icons/fa";
@@ -12,21 +12,35 @@ export const CartsList = () => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    async function getCarts() {
-      try {
-        setLoading(true);
-        const response = await API.get("/carts");
-        setCarts(response.data.carts);
-      } catch (error) {
-        errorHandler(error);
-      } finally {
-        setLoading(false);
+  const limit = 12;
+  const [skip, setSkip] = useState(0);
+  const [pages, setPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  function calSkip(page) {
+    setSkip((page - 1) * limit);
+    setCurrentPage(page);
+  }
+  useEffect(
+    function () {
+      async function getCarts() {
+        try {
+          setLoading(true);
+          const response = await API.get(`/carts?limit=${limit}&skip=${skip}`);
+          const { carts, total } = response.data;
+          setCarts(carts);
+          setPages(Math.ceil(total / limit));
+        } catch (error) {
+          console.log(error);
+          errorHandler(error);
+        } finally {
+          setLoading(false);
+        }
       }
-    }
-    getCarts();
-  }, []);
+      getCarts();
+    },
+    [skip],
+  );
+
   async function handleDelete(cartId) {
     try {
       await API.delete(`/carts/${cartId}`);
@@ -50,6 +64,7 @@ export const CartsList = () => {
               <th>Cart ID</th>
               <th>User ID</th>
               <th>Total Products</th>
+              <th>Total Price</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -60,9 +75,9 @@ export const CartsList = () => {
                 <td>{cart.id}</td>
                 <td>{cart.userId}</td>
                 <td>{cart.products.length}</td>
+                <td>{cart.total} $</td>
                 <td>
-                  <div className="d-flex justify-content-between align-items-center mt-3">
-                    {" "}
+                  <div className="d-flex justify-content-between align-items-center">
                     <FaEye
                       className="me-3 fs-4"
                       onClick={() => navigate(`/dashboard/carts/${cart.id}`)}
@@ -84,6 +99,29 @@ export const CartsList = () => {
           </tbody>
         </Table>
       </div>
+      <Pagination className="justify-content-center flex-wrap my-3">
+        {currentPage != 1 && <Pagination.First onClick={() => calSkip(1)} />}
+        <Pagination.Prev
+          onClick={() => calSkip(currentPage - 1)}
+          disabled={currentPage == 1}
+        />
+        {new Array(pages).fill(1).map((item, i) => (
+          <Pagination.Item
+            key={i}
+            onClick={() => calSkip(i + 1)}
+            active={currentPage == i + 1}
+          >
+            {i + 1}
+          </Pagination.Item>
+        ))}
+        <Pagination.Next
+          onClick={() => calSkip(currentPage + 1)}
+          disabled={currentPage == pages}
+        />
+        {currentPage != pages && (
+          <Pagination.Last onClick={() => calSkip(pages)} />
+        )}
+      </Pagination>
 
       {carts.length === 0 && <p className="text-center">No carts found</p>}
     </Container>

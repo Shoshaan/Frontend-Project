@@ -11,7 +11,7 @@ export const LogoutButton = () => {
     localStorage.removeItem("accessToken");
   }
   return (
-    <Button onClick={handleLogout}>
+    <Button variant="danger" onClick={handleLogout}>
       <RiLogoutBoxRLine />
     </Button>
   );

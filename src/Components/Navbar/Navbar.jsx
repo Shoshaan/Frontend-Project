@@ -3,12 +3,12 @@ import { Navbar as BNavbar, Button, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { LogoutButton } from "../LogoutButton/LogoutButton";
 import { useSelector } from "react-redux";
-import { SearchBar } from "../SearchBar/SearchBar";
+import "./Navbar.scss";
 
 export const Navbar = () => {
   const { isLoggedIn } = useSelector((store) => store.auth);
   return (
-    <BNavbar expand="md">
+    <BNavbar expand="md nav">
       <Container>
         <BNavbar.Brand>
           <span>LOGO</span>
@@ -45,7 +45,7 @@ export const Navbar = () => {
                 <Button as={Link} to="/login">
                   Login
                 </Button>
-                <Button as={Link} to="/register">
+                <Button variant="outline-primary" as={Link} to="/register">
                   Sign Up
                 </Button>
               </>

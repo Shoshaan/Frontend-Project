@@ -1,0 +1,24 @@
+.product-card {
+  transition: transform .2s ease, box-shadow .2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,.08);
+  }
+
+  .card-img-top {
+    height: 180px;
+    object-fit: contain;
+    padding: 1rem;
+  }
+
+  .price {
+    font-weight: 600;
+    color: #30364F;
+  }
+
+  .rating {
+    font-size: .85rem;
+    color: #6b7280;
+  }
+}

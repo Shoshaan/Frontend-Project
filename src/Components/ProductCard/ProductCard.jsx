@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../Store/Slices/CartSlice";
 import toast from "react-hot-toast";
+import "./ProductCard.scss";
 
 export const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
@@ -12,15 +13,19 @@ export const ProductCard = ({ product }) => {
     toast.success("Added to cart");
   }
   return (
-    <Card className="h-100">
-      <Card.Img src={product.thumbnail} />
+    <Card className="h-100 product-card">
+      <Card.Img variant="top" src={product.thumbnail} />
       <Card.Body>
         <Card.Title>{product.title}</Card.Title>
-        <p>⭐ Rating: {product?.rating}</p>
-        <div>{product.price}</div>
+        <p className="rating">⭐ Rating: {product?.rating}</p>
+        <div className="price">{product.price} $</div>
       </Card.Body>
       <Card.Footer className="d-flex justify-content-around">
-        <Button as={Link} to={`/products/${product.id}`}>
+        <Button
+          variant="outline-primary"
+          as={Link}
+          to={`/products/${product.id}`}
+        >
           Learn more
         </Button>
         <Button onClick={handleAddToCart}>Add to Cart</Button>

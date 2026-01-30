@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { API } from "../../Api/Api";
 import { errorHandler } from "../../Utils/ErrorHandler";
 import { Card, Row, Col, Button } from "react-bootstrap";
@@ -8,6 +8,7 @@ export const ProductDetails = () => {
   const [loading, setloading] = useState(false);
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const navigate = useNavigate();
   useEffect(
     function () {
       async function getSingleProduct() {
@@ -49,8 +50,10 @@ export const ProductDetails = () => {
               <h4>${product?.price}</h4>
 
               <p>⭐ Rating: {product?.rating}</p>
-              <Button>Add to Cart</Button>
-              <Button>Back</Button>
+              <Button className="me-3">Add to Cart</Button>
+              <Button variant="secondary" onClick={() => navigate(-1)}>
+                Back
+              </Button>
             </Card.Body>
           </Col>
         </Row>

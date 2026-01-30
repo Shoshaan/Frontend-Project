@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./Styles/App.scss";
 import { Container } from "react-bootstrap";
 import { Route, Routes } from "react-router-dom";
@@ -27,6 +26,8 @@ import { AProductsList } from "./Pages/Dashboard/Products/AProductsList";
 import { AProductDetails } from "./Pages/Dashboard/Products/AProductDetails";
 import { AProductEdit } from "./Pages/Dashboard/Products/AProductEdit";
 import { AdminSideNav } from "./Components/AdminSideNav/AdminSideNav";
+import { CategoriesList } from "./Pages/CategoriesList/CategoriesList";
+import { CategoryProducts } from "./Pages/CategoryProducts/CategoryProducts";
 
 export default function App() {
   const [loading, setloading] = useState(true);
@@ -105,6 +106,11 @@ export default function App() {
             <Route
               path="/dashboard/products/:id/edit"
               Component={isLoggedIn ? AProductEdit : Login}
+            />
+            <Route path="/categories" Component={CategoriesList} />
+            <Route
+              path="/products/category/:slug"
+              Component={CategoryProducts}
             />
           </Routes>
         </Container>

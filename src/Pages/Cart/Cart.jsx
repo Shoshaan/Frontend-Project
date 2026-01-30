@@ -53,7 +53,7 @@ export const Cart = () => {
                     }
                     disabled={quantity === 1}
                   >
-                    −
+                    -
                   </Button>
                   <span style={{ minWidth: "30px", textAlign: "center" }}>
                     {quantity}
