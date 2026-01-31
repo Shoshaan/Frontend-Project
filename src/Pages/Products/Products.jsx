@@ -4,6 +4,7 @@ import { errorHandler } from "../../Utils/ErrorHandler";
 import { Loading } from "../../Components/Loading/Loading";
 import { ProductsPreview } from "../../Components/ProductsPreview/ProductsPreview";
 import { Container, Pagination } from "react-bootstrap";
+import { PriceSort } from "../../Components/PriceSort/PriceSort";
 
 export const Products = () => {
   const [loading, setloading] = useState(false);
@@ -12,6 +13,28 @@ export const Products = () => {
   const [skip, setSkip] = useState(0);
   const [pages, setPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState(null);
+
+  function sortAsc() {
+    if (sortOrder === "asc") {
+      setSortOrder(null);
+    } else {
+      setSkip(0);
+      setCurrentPage(1);
+      setSortOrder("asc");
+    }
+  }
+
+  function sortDesc() {
+    if (sortOrder === "desc") {
+      setSortOrder(null);
+    } else {
+      setSkip(0);
+      setCurrentPage(1);
+      setSortOrder("desc");
+    }
+  }
+
   function calSkip(page) {
     setSkip((page - 1) * limit);
     setCurrentPage(page);
@@ -22,9 +45,12 @@ export const Products = () => {
       async function getProducts() {
         try {
           setloading(true);
-          const response = await API.get(
-            `/products?limit=${limit}&skip=${skip}`,
-          );
+          let url = `/products?limit=${limit}&skip=${skip}`;
+
+          if (sortOrder) {
+            url += `&sortBy=price&order=${sortOrder}`;
+          }
+          const response = await API.get(url);
           const { products, total } = response.data;
           setProducts(products);
           setPages(Math.ceil(total / limit));
@@ -37,11 +63,14 @@ export const Products = () => {
       }
       getProducts();
     },
-    [skip],
+    [skip, sortOrder],
   );
   if (loading) return <Loading />;
   return (
     <Container className="my-4">
+      <div className="d-flex justify-content-end mb-3">
+        <PriceSort onAsc={sortAsc} onDesc={sortDesc} active={sortOrder} />
+      </div>
       <ProductsPreview products={products} />
       <Pagination className="justify-content-center flex-wrap my-3">
         {currentPage != 1 && <Pagination.First onClick={() => calSkip(1)} />}

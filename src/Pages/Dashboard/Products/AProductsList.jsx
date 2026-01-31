@@ -15,6 +15,7 @@ import { Loading } from "../../../Components/Loading/Loading";
 import { FaEye } from "react-icons/fa";
 import { HiPencilAlt } from "react-icons/hi";
 import { MdDeleteForever } from "react-icons/md";
+import { PriceSort } from "../../../Components/PriceSort/PriceSort";
 
 export const AProductsList = () => {
   const navigate = useNavigate();
@@ -32,6 +33,28 @@ export const AProductsList = () => {
     category: "",
     thumbnail: "",
   });
+  const [sortOrder, setSortOrder] = useState(null);
+
+  function sortAsc() {
+    if (sortOrder === "asc") {
+      setSortOrder(null);
+    } else {
+      setSkip(0);
+      setCurrentPage(1);
+      setSortOrder("asc");
+    }
+  }
+
+  function sortDesc() {
+    if (sortOrder === "desc") {
+      setSortOrder(null);
+    } else {
+      setSkip(0);
+      setCurrentPage(1);
+      setSortOrder("desc");
+    }
+  }
+
   function handleAddChange(ev) {
     setNewProduct({
       ...newProduct,
@@ -77,7 +100,12 @@ export const AProductsList = () => {
     async function getProducts() {
       try {
         setLoading(true);
-        const response = await API.get(`/products?limit=${limit}&skip=${skip}`);
+        let url = `/products?limit=${limit}&skip=${skip}`;
+
+        if (sortOrder) {
+          url += `&sortBy=price&order=${sortOrder}`;
+        }
+        const response = await API.get(url);
         const { products, total } = response.data;
         setProducts(products);
         setPages(Math.ceil(total / limit));
@@ -89,7 +117,7 @@ export const AProductsList = () => {
     }
 
     getProducts();
-  }, [skip]);
+  }, [skip, sortOrder]);
 
   async function handleDelete(id) {
     try {
@@ -106,6 +134,9 @@ export const AProductsList = () => {
     <Container className="my-3">
       <div className="d-flex justify-content-end mb-3">
         <Button onClick={() => setIsAdd(true)}>Add Product</Button>
+      </div>
+      <div className="d-flex justify-content-end mb-3">
+        <PriceSort onAsc={sortAsc} onDesc={sortDesc} active={sortOrder} />
       </div>
       <Row className="g-3">
         {isAdd && (

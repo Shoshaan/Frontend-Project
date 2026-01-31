@@ -25,7 +25,6 @@ import { UserDetails } from "./Pages/Dashboard/Users/UserDetails";
 import { AProductsList } from "./Pages/Dashboard/Products/AProductsList";
 import { AProductDetails } from "./Pages/Dashboard/Products/AProductDetails";
 import { AProductEdit } from "./Pages/Dashboard/Products/AProductEdit";
-import { AdminSideNav } from "./Components/AdminSideNav/AdminSideNav";
 import { CategoriesList } from "./Pages/CategoriesList/CategoriesList";
 import { CategoryProducts } from "./Pages/CategoryProducts/CategoryProducts";
 
@@ -57,8 +56,6 @@ export default function App() {
   }, []);
   if (loading) return <Loading />;
   return (
-    <div className="d-flex">
-      {isLoggedIn && <AdminSideNav />}
       <div className="flex-grow-1">
         <Navbar />
         <Toaster position="top-right" />
@@ -115,6 +112,5 @@ export default function App() {
           </Routes>
         </Container>
       </div>
-    </div>
   );
 }

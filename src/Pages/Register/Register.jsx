@@ -37,7 +37,7 @@ export const Register = () => {
     }
   }
   return (
-    <Row className="justify-content-center my-5">
+    <Row className="justify-content-center my-5 p-3">
       <Col md={6} lg={4}>
         <h3 className="text-center">Sign Up</h3>
         <Form onSubmit={handleSubmit} className="auth-form">

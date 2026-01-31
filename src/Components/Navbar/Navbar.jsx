@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { LogoutButton } from "../LogoutButton/LogoutButton";
 import { useSelector } from "react-redux";
 import "./Navbar.scss";
+import { AdminNav } from "../AdminNav/AdminNav";
 
 export const Navbar = () => {
   const { isLoggedIn } = useSelector((store) => store.auth);
@@ -36,6 +37,7 @@ export const Navbar = () => {
                 Search
               </Nav.Link>
             </Nav.Item>
+            {isLoggedIn && <AdminNav />}
           </Nav>
           <div className="d-flex gap-2 ms-auto">
             {isLoggedIn ? (

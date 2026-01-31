@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { replace, useNavigate } from "react-router-dom";
 import { API } from "../../Api/Api";
 import { setUser } from "../../Store/Slices/AuthSlice";
 import { useDispatch } from "react-redux";
@@ -31,13 +31,13 @@ export const Login = () => {
       // Storing access token
       localStorage.setItem("accessToken", payload.accessToken);
       // navigation
-      navigate("/");
+      navigate("/", { replace: true });
     } catch (error) {
       errorHandler(error, "Network error");
     }
   }
   return (
-    <Row className="justify-content-center my-5">
+    <Row className="justify-content-center my-5 p-3">
       <Col md={6} lg={4}>
         <h3 className="text-center">Log In</h3>
         <Form onSubmit={handleLogin}>
